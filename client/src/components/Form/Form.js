@@ -4,16 +4,18 @@ import SelectInput from "./Input/SelectInput";
 import "./Form.css"
 
 class Form extends Component{
-    constructor(){
+    constructor(props){
         super();  
         this.state = {
             searchTerm : "",
             startYear : "",
             endYear : "",
-            numberOfResultsName : ""
+            numberOfResultsName : 5,
+            searchTermInvalid : false,
+            numberOfResultsInvalid : false, 
         }
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleFormSubmission = this.handleFormSubmission.bind(this);
+        this.handleMySubmission = this.handleMySubmission.bind(this);
         this.handleClear = this.handleClear.bind(this);
     }
 
@@ -27,8 +29,22 @@ class Form extends Component{
         });
     };
 
-    handleFormSubmission(event){
+    handleMySubmission(event) {
         event.preventDefault();
+        var counter = 0;
+        if(!this.state.searchTerm){
+            console.log("hey");
+            counter++;
+            this.setState({searchTermInvalid : true})
+        }
+        if(!this.state.numberOfResultsName){
+            counter++;
+            this.setState({numberOfResultsInvalid : true})
+        }
+        if(counter > 0){
+            return;
+        }
+        this.props.handleFormSubmission(this.state.searchTerm, this.state.startYear, this.state.endYear, this.state.numberOfResultsName);
     }
 
     handleClear(event){
@@ -37,18 +53,18 @@ class Form extends Component{
             searchTerm: "",
             startYear : "",
             endYear : "",
-            numberOfResultsSelect : ""
+            numberOfResultsName : 5
         });
     }
 
     render(){
         return (
             <form className="container-fluid">
-                <NormalInput value={this.state.searchTerm} onChange={this.handleInputChange} name="searchTerm" id="searchTermInput" label="Search Term" type="text" required={true} placeholder="National Football League"></NormalInput>
-                <SelectInput value={this.state.numberOfResultsName} onChange={this.handleInputChange} name="numberOfResultsName" id="numberOfResultsSelect" label="Number of Records to Retrieve" required={true} options={[5,10,15]}></SelectInput>
+                <NormalInput className={"form-control " + (this.state.searchTermInvalid ? "error" : "")} value={this.state.searchTerm} onChange={this.handleInputChange} name="searchTerm" id="searchTermInput" label="Search Term" type="text" required={true} placeholder="National Football League"></NormalInput>
+                <SelectInput className={"form-control " + (this.state.numberOfResultsInvalid ? "error" : "")} value={this.state.numberOfResultsName} onChange={this.handleInputChange} name="numberOfResultsName" id="numberOfResultsSelect" label="Number of Records to Retrieve" required={true} options={[5,10,15]}></SelectInput>
                 <NormalInput value={this.state.startYear} onChange={this.handleInputChange} name="startYear" id="startYearInput" label="Start Year (Optional)" type="number" required={false} placeholder="1975"></NormalInput>
                 <NormalInput value={this.state.endYear} onChange={this.handleInputChange} name="endYear" id="endYearInput" label="End Year (Optional)" type="number" required={false} placeholder="2017"></NormalInput>
-                <button onClick={this.handleFormSubmission} className="btn btn-primary col-xs-5 col-sm-2 myButton" type="submit">
+                <button onClick={this.handleMySubmission} className="btn btn-primary col-xs-5 col-sm-2 myButton" type="submit">
                     <span className="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit
                 </button>
                 <button onClick={this.handleClear} className="btn btn-primary col-xs-5 col-sm-2 myButton">

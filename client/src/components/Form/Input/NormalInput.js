@@ -10,7 +10,7 @@ const NormalInput = (props) =>
             name={props.name}
             id={props.id} 
             type={props.type} 
-            className="form-control" 
+            className={props.className ? props.className : "form-control"} 
             placeholder={props.placeholder} 
             required={props.required}
         />
