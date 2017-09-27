@@ -1,0 +1,28 @@
+body{
+  padding-bottom: 50px;
+}
+
+.footer {
+  z-index: 99;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  background-color: #ccc;
+}
+
+.footerContent{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:table;
+}
+
+.copyContainer{
+  display:table-cell;
+  vertical-align: middle;
+  color:#2f2f2f;
+  font-size: 14px;
+  text-align: center;
+}
