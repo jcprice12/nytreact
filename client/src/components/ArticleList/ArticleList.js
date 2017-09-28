@@ -19,6 +19,7 @@ class ArticleList extends Component{
                         return (
                             <Article
                                 saveArticle={this.props.saveArticle}
+                                deleteArticle={this.props.deleteArticle}
                                 title={article.title}
                                 snippet={article.snippet}
                                 url={article.url}
@@ -27,7 +28,7 @@ class ArticleList extends Component{
                                 key={article._id}
                             />
                         )})
-                    : <NoResults/>
+                    : <NoResults text="No Results"/>
                 }
             </div>
         );

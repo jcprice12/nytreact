@@ -26,7 +26,7 @@ const Article = (props) => (
                 (props.deleteArticle
                     ?
                         <div className="panel-footer">
-                            <div className="btn btn-default">Delete</div>
+                            <div onClick={() => props.deleteArticle(props._id)}className="btn btn-default">Delete</div>
                         </div>
                     : ""
                 )
