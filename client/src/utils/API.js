@@ -17,5 +17,15 @@ export default {
     }
   
     return axios.get(queryURL);
+  },
+  getSavedArticles : function(){
+    return axios.get("/api/save");
+  },
+  saveArticle : function(article){
+    console.log("saving article");
+    return axios.post("/api/save",article)
+  },
+  deleteArticle : function(id){
+    return axios.delete(("/api/save/" + id));
   }
 };

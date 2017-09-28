@@ -10,13 +10,13 @@ class Home extends Component{
       results : []
     }
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
+    this.saveArticle = this.saveArticle.bind(this);
   }
 
   handleFormSubmission(searchTerm, startYear, endYear, numberOfResultsName){
     console.log("handling form submission");
     const that = this;
     API.search(searchTerm, startYear, endYear).then(function(resp){
-      console.log(resp);
       let results = [];
       for(var i = 0; i < numberOfResultsName; i++){
         let art = resp.data.response.docs[i];
@@ -41,6 +41,26 @@ class Home extends Component{
     })
   }
 
+  saveArticle(article){
+    let that = this;
+    API.saveArticle(article).then(function(res){
+      console.log(res);
+      if(res.data.hasOwnProperty("exists")){
+        alert("Unable to save, article already exists in the DB");
+      } else {
+        let newResults = that.state.results.filter(myArticle => {
+          return (article._id !== myArticle._id);
+        });
+        that.setState({
+          "results" : newResults 
+        });
+      }
+    }).catch(function(err){
+      console.log(err);
+      alert("Error Occurred. Could not save article");
+    });
+  }
+
   render(){
     return( 
       <div>
@@ -63,7 +83,7 @@ class Home extends Component{
               <h2>Results</h2>
             </div>
             <div className="panel-body">
-              <ArticleList canSave={true} articles={this.state.results}></ArticleList>
+              <ArticleList saveArticle={this.saveArticle} articles={this.state.results}></ArticleList>
             </div>
           </div>
         </div>

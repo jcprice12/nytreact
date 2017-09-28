@@ -18,7 +18,7 @@ class ArticleList extends Component{
                     ? this.props.articles.map(article =>{
                         return (
                             <Article
-                                canSave={this.props.canSave}
+                                saveArticle={this.props.saveArticle}
                                 title={article.title}
                                 snippet={article.snippet}
                                 url={article.url}
